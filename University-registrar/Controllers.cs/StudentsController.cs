@@ -21,19 +21,27 @@ namespace UniversityRegistrar.Controllers
             return View(_db.Students.ToList());
         }
 
-        //         public ActionResult Create()
-        //         {
-        //             ViewBag.RestaurantId = new SelectList(_db.Restaurants, "RestaurantId", "Name");
-        //             return View();
-        //         }
+        public ActionResult Create()
+        {
+            ViewBag.CourseId = new SelectList(_db.Courses, "CourseId", "Name");
+            return View();
+        }
 
-        //         [HttpPost]
-        //         public ActionResult Create(Cuisine cuisine)
-        //         {
-        //             _db.Cuisines.Add(cuisine);
-        //             _db.SaveChanges();
-        //             return RedirectToAction("Index");
-        //         }
+        [HttpPost]
+        public ActionResult Create(Student student, int CorseId)
+        {
+            _db.Students.Add(student);
+            _db.SaveChanges();
+            if (CourseId != 0)
+            {
+                _db.CourseStudent.Add(
+                    new CourseStudent() { CourseId = CourseId, StudentId = student.StudentId }
+                );
+                _db.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
+        }
 
         public ActionResult Details(int id)
         {
