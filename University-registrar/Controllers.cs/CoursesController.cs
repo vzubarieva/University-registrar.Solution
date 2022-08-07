@@ -58,23 +58,19 @@ namespace UniversityRegistrar.Controllers
             return RedirectToAction("Index");
         }
 
-        //         public ActionResult Delete(int id)
-        //         {
-        //             var thisRestaurant = _db.Restaurants.FirstOrDefault(
-        //                 restaurant => restaurant.RestaurantId == id
-        //             );
-        //             return View(thisRestaurant);
-        //         }
+        public ActionResult Delete(int id)
+        {
+            var thisCourse = _db.Courses.FirstOrDefault(course => course.CourseId == id);
+            return View(thisCourse);
+        }
 
-        //         [HttpPost, ActionName("Delete")]
-        //         public ActionResult DeleteConfirmed(int id)
-        //         {
-        //             var thisRestaurant = _db.Restaurants.FirstOrDefault(
-        //                 restaurant => restaurant.RestaurantId == id
-        //             );
-        //             _db.Restaurants.Remove(thisRestaurant);
-        //             _db.SaveChanges();
-        //             return RedirectToAction("Index");
-        //         }
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            var thisCourse = _db.Courses.FirstOrDefault(course => course.CourseId == id);
+            _db.Courses.Remove(thisCourse);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }
