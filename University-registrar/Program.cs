@@ -1,7 +1,7 @@
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 
-namespace University-registrar
+namespace UniversityRegistrar
 {
     public class Program
     {

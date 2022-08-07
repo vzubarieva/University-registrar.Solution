@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using University-registrar.Models;
+using UniversityRegistrar.Models;
 
-namespace University-registrar
+namespace UniversityRegistrar
 {
     public class Startup
     {
@@ -25,7 +25,7 @@ namespace University-registrar
             services.AddMvc();
             services
                 .AddEntityFrameworkMySql()
-                .AddDbContext<University-registrarContext>(
+                .AddDbContext<UniversityRegistrarContext>(
                     options =>
                         options.UseMySql(
                             Configuration["ConnectionStrings:DefaultConnection"],
