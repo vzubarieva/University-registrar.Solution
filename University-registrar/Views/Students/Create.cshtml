@@ -10,10 +10,15 @@
 {
   @Html.LabelFor(model => model.Name)
   @Html.TextBoxFor(model => model.Name)
+  @Html.LabelFor(model => model.DateOfEnrollment)
+  @Html.TextBoxFor(model => model.DateOfEnrollment, "", new Dictionary<string, object>
+{
+{ "type", "date" }
+})
 
   @Html.Label("Select course")
   @Html.DropDownList("CourseId")
 
-  <input type="submit" value="Add new item" class="btn btn-default" />
+  <input type="submit" value="Add new student" class="btn btn-default" />
 }
 <p>@Html.ActionLink("Show all students", "Index")</p>

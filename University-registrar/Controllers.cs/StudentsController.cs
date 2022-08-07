@@ -28,7 +28,7 @@ namespace UniversityRegistrar.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Student student, int CorseId)
+        public ActionResult Create(Student student, int CourseId)
         {
             _db.Students.Add(student);
             _db.SaveChanges();
@@ -52,21 +52,46 @@ namespace UniversityRegistrar.Controllers
             return View(thisStudent);
         }
 
-        //         public ActionResult Edit(int id)
-        //         {
-        //             var thisCuisine = _db.Cuisines.FirstOrDefault(cuisine => cuisine.CuisineId == id);
-        //             ViewBag.RestaurantId = new SelectList(_db.Restaurants, "RestaurantId", "Name");
-        //             return View(thisCuisine);
-        //         }
+        public ActionResult Edit(int id)
+        {
+            var thisStudent = _db.Students.FirstOrDefault(student => student.StudentId == id);
+            ViewBag.CourseId = new SelectList(_db.Courses, "CourseId", "Name");
+            return View(thisStudent);
+        }
 
-        //         [HttpPost]
-        //         public ActionResult Edit(Cuisine cuisine)
-        //         {
-        //             _db.Entry(cuisine).State = EntityState.Modified;
-        //             _db.SaveChanges();
-        //             return RedirectToAction("Index");
-        //         }
+        [HttpPost]
+        public ActionResult Edit(Student student, int CourseId)
+        {
+            if (CourseId != 0)
+            {
+                _db.CourseStudent.Add(
+                    new CourseStudent() { CourseId = CourseId, StudentId = student.StudentId }
+                );
+            }
+            _db.Entry(student).State = EntityState.Modified;
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
+        public ActionResult AddCourse(int id)
+        {
+            var thisStudent = _db.Students.FirstOrDefault(student => student.StudentId == id);
+            ViewBag.CourseId = new SelectList(_db.Courses, "CourseId", "Name");
+            return View(thisStudent);
+        }
+
+        [HttpPost]
+        public ActionResult AddCorse(Student student, int CourseId)
+        {
+            if (CourseId != 0)
+            {
+                _db.Corsestudent.Add(
+                    new CourseStudent() { CourseId = CourseId, StudentId = student.StudentId }
+                );
+                _db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
         //         public ActionResult Delete(int id)
         //         {
         //             var thisCuisine = _db.Cuisines.FirstOrDefault(cuisine => cuisine.CuisineId == id);
