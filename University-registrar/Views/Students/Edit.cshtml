@@ -17,8 +17,11 @@
   @Html.LabelFor(model => model.DateOfEnrollment)
   @Html.EditorFor(model => model.DateOfEnrollment)
 
-  @Html.Label("Select corse")
+  @Html.Label("Select course")
   @Html.DropDownList("CourseId")
+
+  @Html.Label("Select departments")
+  @Html.DropDownList("DepartmentId")
 
   <input type="submit" value="Save" />
 }

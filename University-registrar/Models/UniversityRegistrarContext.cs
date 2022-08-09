@@ -12,6 +12,8 @@ namespace UniversityRegistrar.Models
 
         public DbSet<DepartmentCourse> DepartmentCourses { get; set; }
 
+        public DbSet<StudentDepartment> StudentDepartments { get; set; }
+
         public UniversityRegistrarContext(DbContextOptions options) : base(options) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

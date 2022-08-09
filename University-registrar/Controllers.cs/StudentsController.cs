@@ -24,11 +24,13 @@ namespace UniversityRegistrar.Controllers
         public ActionResult Create()
         {
             ViewBag.CourseId = new SelectList(_db.Courses, "CourseId", "Name");
+            ViewBag.DepartmentId = new SelectList(_db.Departments, "DepartmentId", "Name");
+
             return View();
         }
 
         [HttpPost]
-        public ActionResult Create(Student student, int CourseId)
+        public ActionResult Create(Student student, int CourseId, int DepartmentId)
         {
             _db.Students.Add(student);
             _db.SaveChanges();
@@ -40,6 +42,17 @@ namespace UniversityRegistrar.Controllers
                 _db.SaveChanges();
             }
 
+            if (DepartmentId != 0)
+            {
+                _db.StudentDepartments.Add(
+                    new StudentDepartment()
+                    {
+                        DepartmentId = DepartmentId,
+                        StudentId = student.StudentId
+                    }
+                );
+                _db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 
@@ -48,6 +61,8 @@ namespace UniversityRegistrar.Controllers
             Student thisStudent = _db.Students
                 .Include(student => student.JoinEntities)
                 .ThenInclude(join => join.Course)
+                .Include(student => student.JoinStudentDepartment)
+                .ThenInclude(join => join.Department)
                 .FirstOrDefault(student => student.StudentId == id);
             return View(thisStudent);
         }
@@ -56,11 +71,13 @@ namespace UniversityRegistrar.Controllers
         {
             var thisStudent = _db.Students.FirstOrDefault(student => student.StudentId == id);
             ViewBag.CourseId = new SelectList(_db.Courses, "CourseId", "Name");
+            ViewBag.DepartmentId = new SelectList(_db.Departments, "DepartmentId", "Name");
+
             return View(thisStudent);
         }
 
         [HttpPost]
-        public ActionResult Edit(Student student, int CourseId)
+        public ActionResult Edit(Student student, int CourseId, int DepartmentId)
         {
             if (CourseId != 0)
             {
@@ -68,6 +85,17 @@ namespace UniversityRegistrar.Controllers
                     new CourseStudent() { CourseId = CourseId, StudentId = student.StudentId }
                 );
             }
+            if (DepartmentId != 0)
+            {
+                _db.StudentDepartments.Add(
+                    new StudentDepartment()
+                    {
+                        DepartmentId = DepartmentId,
+                        StudentId = student.StudentId
+                    }
+                );
+            }
+
             _db.Entry(student).State = EntityState.Modified;
             _db.SaveChanges();
             return RedirectToAction("Index");
