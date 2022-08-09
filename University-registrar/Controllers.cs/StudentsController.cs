@@ -34,7 +34,7 @@ namespace UniversityRegistrar.Controllers
             _db.SaveChanges();
             if (CourseId != 0)
             {
-                _db.CourseStudent.Add(
+                _db.CourseStudents.Add(
                     new CourseStudent() { CourseId = CourseId, StudentId = student.StudentId }
                 );
                 _db.SaveChanges();
@@ -64,7 +64,7 @@ namespace UniversityRegistrar.Controllers
         {
             if (CourseId != 0)
             {
-                _db.CourseStudent.Add(
+                _db.CourseStudents.Add(
                     new CourseStudent() { CourseId = CourseId, StudentId = student.StudentId }
                 );
             }
@@ -81,11 +81,11 @@ namespace UniversityRegistrar.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddCorse(Student student, int CourseId)
+        public ActionResult AddCourse(Student student, int CourseId)
         {
             if (CourseId != 0)
             {
-                _db.CourseStudent.Add(
+                _db.CourseStudents.Add(
                     new CourseStudent() { CourseId = CourseId, StudentId = student.StudentId }
                 );
                 _db.SaveChanges();
@@ -111,10 +111,10 @@ namespace UniversityRegistrar.Controllers
         [HttpPost]
         public ActionResult DeleteCourse(int joinId)
         {
-            var joinEntry = _db.CourseStudent.FirstOrDefault(
+            var joinEntry = _db.CourseStudents.FirstOrDefault(
                 entry => entry.CourseStudentId == joinId
             );
-            _db.CourseStudent.Remove(joinEntry);
+            _db.CourseStudents.Remove(joinEntry);
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
