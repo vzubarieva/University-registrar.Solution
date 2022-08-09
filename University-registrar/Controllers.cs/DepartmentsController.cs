@@ -108,5 +108,35 @@ namespace UniversityRegistrar.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public ActionResult Delete(int id)
+        {
+            var thisDepartment = _db.Departments.FirstOrDefault(
+                department => department.DepartmentId == id
+            );
+            return View(thisDepartment);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            var thisDepartment = _db.Departments.FirstOrDefault(
+                department => department.DepartmentId == id
+            );
+            _db.Departments.Remove(thisDepartment);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteCourse(int joinId)
+        {
+            var joinEntry = _db.DepartmentCourses.FirstOrDefault(
+                entry => entry.DepartmentCourseId == joinId
+            );
+            _db.DepartmentCourses.Remove(joinEntry);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }
