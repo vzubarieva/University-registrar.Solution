@@ -27,6 +27,25 @@ else
     }
   </ul>
 }
+@if (@Model.JoinStudentDepartment.Count == 0)
+{
+  <p>This student does not belong to any department</p>
+}
+else
+{
+  <h4>Students the departments belongs to:</h4>
+  <ul>
+    @foreach (var join in Model.JoinStudentDepartment)
+    {
+      <li>@join.Student.Name</li>
+      @using (Html.BeginForm("DeleteStudent", "Departments"))
+      {
+        @Html.Hidden("joinId", @join.StudentDepartmentId)
+        <input type="submit" value="Delete" />
+      }
+    }
+  </ul>
+}
 
 <p>@Html.ActionLink("Back to departments", "Index")</p>
 <p>@Html.ActionLink("Edit Department", "Edit", new { id = Model.DepartmentId })</p>
