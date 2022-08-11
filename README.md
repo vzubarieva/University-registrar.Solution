@@ -6,6 +6,8 @@
 
 Web application for a University registrar to keep track of students, courses and departments.
 
+![schema-university-registrar](University-registrar/wwwroot/img/schema.png)
+
 ## Technologies Used
 
 - C#
